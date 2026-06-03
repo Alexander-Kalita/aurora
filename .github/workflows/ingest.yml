@@ -1,0 +1,51 @@
+
+name: Ingest
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_GITHUB_ROLE_ARN }}
+          aws-region: eu-central-1
+
+      - name: Upload CSV to S3
+        run: |
+          aws s3 cp data/superstore.csv \
+          s3://${{ secrets.AWS_RAW_BUCKET }}/data/superstore.csv
+
+      - name: Inject S3 bucket name into SQL file
+        run: |
+          sed -i "s|{{AWS_RAW_BUCKET}}|${{ secrets.AWS_RAW_BUCKET }}|g" snowflake/load.sql
+    
+      - name: Run Snowflake load
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+          SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
+          SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
+          AWS_RAW_BUCKET: ${{ secrets.AWS_RAW_BUCKET }}
+        run: |
+          snowsql -a $SNOWFLAKE_ACCOUNT \
+                   -u $SNOWFLAKE_USER \
+                   -p $SNOWFLAKE_PASSWORD \
+                   -w $SNOWFLAKE_WAREHOUSE \
+                   -d $SNOWFLAKE_DATABASE \
+                   -s $SNOWFLAKE_SCHEMA \
+                   -f snowflake/load.sql
+
