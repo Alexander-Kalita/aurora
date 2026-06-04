@@ -31,11 +31,10 @@ jobs:
         run: |
           sed -i "s|{{AWS_RAW_BUCKET}}|${{ secrets.AWS_RAW_BUCKET }}|g" snowflake/load.sql
     
-      - name: Install SnowSQL
-        run: |
-          curl -o snowsql.bash https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.31-linux_x86_64.bash
-          bash snowsql.bash -y -p $HOME/.snowsql
-          echo "$HOME/.snowsql/bin" >> $GITHUB_PATH
+      - name: Install Snowflake CLI
+        uses: snowflakedb/snowflake-cli-action@v2
+        with:
+          cli-version: "3.16"
 
       - name: Run Snowflake load
         env:
@@ -45,13 +44,17 @@ jobs:
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
           SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
           SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
-          AWS_RAW_BUCKET: ${{ secrets.AWS_RAW_BUCKET }}
         run: |
-          snowsql -a $SNOWFLAKE_ACCOUNT \
-                   -u $SNOWFLAKE_USER \
-                   -p $SNOWFLAKE_PASSWORD \
-                   -w $SNOWFLAKE_WAREHOUSE \
-                   -d $SNOWFLAKE_DATABASE \
-                   -s $SNOWFLAKE_SCHEMA \
-                   -f snowflake/load.sql
+          snow connection add default \
+            --account $SNOWFLAKE_ACCOUNT \
+            --user $SNOWFLAKE_USER \
+            --password $SNOWFLAKE_PASSWORD
 
+          snow sql -q "USE WAREHOUSE $SNOWFLAKE_WAREHOUSE;"
+          snow sql -q "USE DATABASE $SNOWFLAKE_DATABASE;"
+          snow sql -q "USE SCHEMA $SNOWFLAKE_SCHEMA;"
+
+          snow sql -f snowflake/load.sql
+
+          
+  
