@@ -34,7 +34,7 @@ jobs:
       - name: Install SnowSQL
         run: |
           curl -o snowsql.bash https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.31-linux_x86_64.bash
-          bash snowsql.bash -y
+          bash snowsql.bash -y -p $HOME/.snowsql
           echo "$HOME/.snowsql/bin" >> $GITHUB_PATH
 
       - name: Run Snowflake load
