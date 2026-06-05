@@ -46,9 +46,8 @@ jobs:
           SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
         run: |
           snow connection add \
-            --name default \
             --account $SNOWFLAKE_ACCOUNT \
-            --user $SNOWFLAKE_USER \
+            --username $SNOWFLAKE_USER \
             --password $SNOWFLAKE_PASSWORD
 
           snow sql -q "USE WAREHOUSE $SNOWFLAKE_WAREHOUSE;"
