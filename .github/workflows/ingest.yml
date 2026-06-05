@@ -49,6 +49,7 @@ jobs:
             --account $SNOWFLAKE_ACCOUNT \
             --username $SNOWFLAKE_USER \
             --password $SNOWFLAKE_PASSWORD
+            --no-interactive
 
           snow sql -q "USE WAREHOUSE $SNOWFLAKE_WAREHOUSE;"
           snow sql -q "USE DATABASE $SNOWFLAKE_DATABASE;"
