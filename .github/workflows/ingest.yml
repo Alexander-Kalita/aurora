@@ -45,7 +45,8 @@ jobs:
           SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
           SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
         run: |
-          snow connection add default \
+          snow connection add \
+            --name default \
             --account $SNOWFLAKE_ACCOUNT \
             --user $SNOWFLAKE_USER \
             --password $SNOWFLAKE_PASSWORD
