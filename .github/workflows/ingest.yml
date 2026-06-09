@@ -36,15 +36,12 @@ jobs:
         with:
           cli-version: "3.16"
 
-      - name: Run Snowflake load
+      - name: Configure Snowflake connection
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
           SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
           SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
           SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
-          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
-          SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
         run: |
           snow connection add \
             --connection-name default \
@@ -54,10 +51,8 @@ jobs:
             --rolename $SNOWFLAKE_ROLE \
             --no-interactive
 
-          snow sql -q "USE WAREHOUSE $SNOWFLAKE_WAREHOUSE;"
-          snow sql -q "USE DATABASE $SNOWFLAKE_DATABASE;"
-          snow sql -q "USE SCHEMA $SNOWFLAKE_SCHEMA;"
-
+      - name: Run Snowflake load
+        run: |
           snow sql -f snowflake/load.sql
 
       - name: Run Snowflake transform

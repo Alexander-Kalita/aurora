@@ -1,4 +1,7 @@
 
+-- Use warehouse for execution
+USE WAREHOUSE AURORA_WH;
+
 -- Use database for execution
 USE DATABASE AURORA_DB;
 
