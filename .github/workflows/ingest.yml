@@ -59,4 +59,11 @@ jobs:
         run: |
           snow sql -f snowflake/transform.sql
     
-  
+      - name: Validate Snowflake data
+        run: |
+          snow sql -q '
+          SELECT 
+            COUNT(*) AS total_rows,
+            COUNT(DISTINCT order_id) AS unique_orders
+          FROM AURORA_DB.CURATED.curated_superstore;
+          '
