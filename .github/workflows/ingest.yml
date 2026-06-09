@@ -62,6 +62,7 @@ jobs:
       - name: Validate Snowflake data
         run: |
           snow sql -q '
+          USE WAREHOUSE AURORA_WH;
           SELECT 
             COUNT(*) AS total_rows,
             COUNT(DISTINCT order_id) AS unique_orders
