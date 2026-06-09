@@ -60,5 +60,8 @@ jobs:
 
           snow sql -f snowflake/load.sql
 
-          
+      - name: Run Snowflake transform
+        run: |
+          snow sql -f snowflake/transform.sql
+    
   
