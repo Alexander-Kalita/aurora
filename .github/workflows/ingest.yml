@@ -48,7 +48,7 @@ jobs:
         run: |
           snow connection add \
             --connection-name default \
-            --account $SNOWFLAKE_ACCOUNT \
+            --account  $SNOWFLAKE_ACCOUNT \
             --username $SNOWFLAKE_USER \
             --password $SNOWFLAKE_PASSWORD \
             --rolename $SNOWFLAKE_ROLE \

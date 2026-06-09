@@ -3,3 +3,12 @@
 terraform/.terraform/
 terraform/*.tfstate
 terraform/*.tfstate.backup
+
+# Terraform variables
+terraform/*.tfvars
+terraform/*.tfvars.json
+
+# Local overrides
+terraform/local*.hcl
+terraform/*.local.hcl
+terraform.local.hcl

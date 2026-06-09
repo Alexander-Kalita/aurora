@@ -43,10 +43,16 @@ CREATE OR REPLACE TABLE raw_superstore (
 
 -- Create stage for accessing S3 data
 CREATE OR REPLACE STAGE s3_stage
+  STORAGE_INTEGRATION = AURORA_S3_INTEGRATION
   URL = 's3://{{AWS_RAW_BUCKET}}/data/'
   FILE_FORMAT = csv_ff;
+
+-- Test data access
+LIST @s3_stage;
 
 -- Load data from S3 into RAW table
 COPY INTO raw_superstore
 FROM @s3_stage
 ON_ERROR = CONTINUE;
+
+
