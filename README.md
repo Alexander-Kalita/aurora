@@ -31,6 +31,45 @@ The workflow can be triggered manually via the GitHub Actions interface. Once st
 
 The pipeline runs sequentially, and each step can be observed in the GitHub Actions interface. The validation step executes SQL queries directly within the pipeline to verify data correctness. These validation results are displayed in the GitHub Actions logs, providing immediate confirmation that the data pipeline executed successfully and produced consistent results. Below are examples of the pipeline execution, steps and validation output.
 
+## Project structure
+The project follows a modular and structured repository design aligned with data engineering best practices. It consists of four main components, each responsible for a specific part of the pipeline:
+
+- **terraform/**
+Contains Infrastructure-as-Code (IaC) configuration used to provision AWS resources such as the S3 bucket and IAM roles.
+
+- **.github/workflows/**
+Defines the GitHub Actions pipeline used for orchestrating data ingestion, loading, transformation, and validation steps.
+
+- **snowflake/**
+Includes SQL scripts for:
+  - Infrastructure setup (`setup.sql`)  
+  - Data ingestion into the `RAW` schema (`load.sql`)  
+  - Data transformation into the `CURATED` schema (`transform.sql`)
+ 
+- **data/**
+Stores the source dataset (`superstore.csv`) used in this pipeline.
+
+```
+aurora/
+├─ README.md
+├─ .gitignore
+├─ terraform/
+│  ├─ providers.tf
+│  ├─ variables.tf
+│  ├─ main.tf
+│  ├─ outputs.tf
+│  └─ versions.tf
+├─ data/
+│  └─ superstore.csv
+├─ snowflake/
+│  ├─ setup.sql
+│  ├─ load.sql
+│  └─ transform.sql
+└─ .github/
+   └─ workflows/
+      ├─ terraform.yml
+      └─ ingest.yml
+```
 
 
 
