@@ -23,7 +23,7 @@ The data is stored in Amazon S3 and then loaded into Snowflake using external st
 4. **Processing (Snowflake RAW → CURATED layer + Validation)**  
 The raw data is transformed into a structured and typed format in the `CURATED` schema. Automated validation checks (row count and uniqueness of business keys) are executed within the pipeline to ensure data correctness and integrity.
 
-![Aurora Architecture](docs/aurora_architecture.png)
+![Aurora Architecture](docs/aurora_architecture.drawio.png)
 
 ## Pipeline validation
 After the initial infrastructure setup in Terraform and Snowflake, the pipeline execution is fully managed through GitHub Actions.
