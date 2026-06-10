@@ -9,7 +9,6 @@ The pipeline eliminates the need for manual infrastructure setup and data migrat
 Aurora is designed to be reusable with minimal configuration, allowing it to process different structured datasets efficiently. The solution is also cost-effective, as it relies on low-cost AWS S3 storage and Snowflake’s consumption-based pricing model, making it suitable for small to medium datasets.
 
 ## Project workflow
-
 Aurora is designed as a simple and lightweight pipeline using core cloud data engineering components. The workflow consists of four main steps:
 
 1. **Infrastructure (Terraform → AWS)**  
@@ -23,6 +22,8 @@ The data is stored in Amazon S3 and then loaded into Snowflake using external st
 
 4. **Processing (Snowflake RAW → CURATED layer + Validation)**  
 The raw data is transformed into a structured and typed format in the `CURATED` schema. Automated validation checks (row count and uniqueness of business keys) are executed within the pipeline to ensure data correctness and integrity.
+
+![Aurora Architecture](docs/aurora_architecture.png)
 
 ## Pipeline validation
 After the initial infrastructure setup in Terraform and Snowflake, the pipeline execution is fully managed through GitHub Actions.
