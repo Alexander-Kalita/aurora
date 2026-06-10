@@ -32,6 +32,15 @@ The workflow can be triggered manually via the GitHub Actions interface. Once st
 
 The pipeline runs sequentially, and each step can be observed in the GitHub Actions interface. The validation step executes SQL queries directly within the pipeline to verify data correctness. These validation results are displayed in the GitHub Actions logs, providing immediate confirmation that the data pipeline executed successfully and produced consistent results. Below are examples of the pipeline execution, steps and validation output.
 
+### Pipeline Execution
+![Pipeline Run](docs/aurora-run.png)
+
+### Pipeline Steps
+![Pipeline Steps](docs/aurora-steps.png)
+
+### Validation Output
+![Validation Output](docs/aurora-validation.png)
+
 ## Project structure
 The project follows a modular and structured repository design aligned with data engineering best practices. It consists of four main components, each responsible for a specific part of the pipeline:
 
