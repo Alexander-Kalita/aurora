@@ -24,6 +24,12 @@ The data is stored in Amazon S3 and then loaded into Snowflake using external st
 4. **Processing (Snowflake RAW → CURATED layer + Validation)**  
 The raw data is transformed into a structured and typed format in the `CURATED` schema. Automated validation checks (row count and uniqueness of business keys) are executed within the pipeline to ensure data correctness and integrity.
 
+## Pipeline validation
+After the initial infrastructure setup in Terraform and Snowflake, the pipeline execution is fully managed through GitHub Actions.
+
+The workflow can be triggered manually via the GitHub Actions interface. Once started, the pipeline executes all defined steps automatically, including data ingestion, loading, transformation, and validation. In this project, the complete workflow executes in 44 seconds.
+
+The pipeline runs sequentially, and each step can be observed in the GitHub Actions interface. The validation step executes SQL queries directly within the pipeline to verify data correctness. These validation results are displayed in the GitHub Actions logs, providing immediate confirmation that the data pipeline executed successfully and produced consistent results. Below are examples of the pipeline execution, steps and validation output.
 
 
 
