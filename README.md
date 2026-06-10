@@ -71,5 +71,32 @@ aurora/
       └─ ingest.yml
 ```
 
+## Pipeline reusability
+Aurora is designed as a reusable data pipeline that can be deployed and executed in any local environment with minimal configuration.
+
+The pipeline is modular and cloud-based, allowing users to process different structured datasets by adjusting configuration variables and input data files. Infrastructure provisioning, data ingestion, transformation, and validation are fully automated, making the solution easily reproducible.
+
+### Prerequisites
+To run this project locally, the following tools and services are required:
+- **Visual Studio Code** – [VS Code Download](https://code.visualstudio.com/download)  
+- **AWS account (Free Tier)** – [AWS Free Tier](https://aws.amazon.com/free/)  
+- **AWS CLI** – [AWS CLI Installation](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)  
+- **Terraform CLI** – [Install Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)  
+- **Snowflake account** – [Snowflake Trial](https://docs.snowflake.com/en/user-guide/admin-trial-account)  
+- **GitHub account** – [GitHub Account Creation](https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github)  
+
+### Setup Overview
+The pipeline can be adapted to new datasets by replacing the source CSV file and updating schema definitions in the SQL scripts. To use the pipeline:
+1. Clone this repository  
+2. Configure required credentials (AWS, Snowflake, GitHub Secrets)  
+3. Deploy infrastructure using Terraform  
+4. Execute Snowflake setup script (`setup.sql`)  
+5. Trigger the GitHub Actions workflow  
+
+### References
+The following resources were used as supporting documentation for this project:
+- Terraform AWS Guide – https://developer.hashicorp.com/terraform/tutorials/aws-get-started
+- Terraform GitHub Actions Integration – https://developer.hashicorp.com/terraform/tutorials/automation/github-actions
+- Snowflake GitHub Actions (Snowflake CLI) – https://docs.snowflake.com/en/developer-guide/snowflake-cli/cicd/github-action
 
 
